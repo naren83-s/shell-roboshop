@@ -5,10 +5,9 @@ AMI_ID="ami-0220d79f3f480ecf5"
 ZONE_ID="Z0354649BHBBW98BVSKE"
 DOMAIN_NAME="naren83.online"
 
-for instanve in $@
+for instance in $@
 do
-   
-   INSTANCE_ID=$( aws ec2 run-instances \
+    INSTANCE_ID=$( aws ec2 run-instances \
     --image-id $AMI_ID \
     --instance-type "t3.micro" \
     --security-group-ids $SG_ID \
@@ -17,33 +16,24 @@ do
     --output text )
 
     if [ $instance == "frontend" ]; then
-       
         IP=$(
-
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
             --query 'Reservations[].Instances[].PublicIpAddress' \
             --output text
         )
-
-        RECORD_NAME="$DOMAIN_NAME"
-    
+        RECORD_NAME="$DOMAIN_NAME" # daws88s.online
     else
-        
         IP=$(
-
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
             --query 'Reservations[].Instances[].PrivateIpAddress' \
             --output text
         )
-
-        RECORD_NAME="$instance.$DOMAIN_NAME"
-
+        RECORD_NAME="$instance.$DOMAIN_NAME" # mongodb.daws88s.online
     fi
 
-
-    echo " IP Adderess $IP"
+    echo "IP Address: $IP"
 
     aws route53 change-resource-record-sets \
     --hosted-zone-id $ZONE_ID \
@@ -68,6 +58,6 @@ do
     }
     '
 
-    echo " Reords update for $instance"
+    echo "record updated for $instance"
 
-done 
+done
