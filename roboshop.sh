@@ -5,7 +5,7 @@ AMI_ID="ami-0220d79f3f480ecf5"
 HOSTED_ZONE_ID="Z0354649BHBBW98BVSKE"
 DOMAIN_NAME="naren83.online"
 
-fot instance in $@
+for instance in $@
 do
    INSTANCESID=$(aws ec2 run-instances \
                   --image-id $AMI_ID\
