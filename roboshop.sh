@@ -20,7 +20,6 @@ do
           aws ec2 describe-instances \
           --instance-ids $INSTANCESID \
           --query 'Reservations[].Instances[].PublicIpAddress' \
-          --region YOUR_REGION \
           --output text
         )
         RECORD_NAME="$DOMAIN_NAME"
@@ -29,7 +28,6 @@ do
          aws ec2 describe-instances \
          --instance-ids $INSTANCESID \
          --query 'Reservations[*].Instances[*].PrivateIpAddress' \
-         --region YOUR_REGION \
          --output text
         )
         RECORD_NAME="$HOSTED_ZONE_ID.$DOMAIN_NAME"
@@ -49,7 +47,7 @@ do
              "ResourceRecordSet": {
                  "Name": "'$RECORD_NAME'",
                  "Type": "A",
-                 "TTL": 60,
+                 "TTL": 1,
                 "ResourceRecords": [
                  {
                    "Value": "'$IP'"
