@@ -15,7 +15,7 @@ do
                  --query 'Instances[0].InstanceId' \
                  --output text)
  
-   if [ $instance == forntend ]; then
+   if [ $instance == "forntend" ]; then
       IP=$(
           aws ec2 describe-instances \
           --instance-ids $INSTANCESID \
@@ -33,7 +33,7 @@ do
         RECORD_NAME="$HOSTED_ZONE_ID.$DOMAIN_NAME"
     fi
 
-      echo "IP addres is : $IP"
+      echo "IP Addres is : $IP"
 
         aws route53 change-resource-record-sets \
         --hosted-zone-id $HOSTED_ZONE_ID \
